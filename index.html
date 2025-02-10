@@ -3,275 +3,601 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Даркнет: История и безопасность</title>
+    <title>Даркнет: Мир в тени</title>
     <style>
-        /* Основные стили для всего сайта */
         body {
             font-family: Arial, sans-serif;
-            background-color: #111;
-            color: #fff;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-
-        header {
-            background-color: #222;
-            padding: 20px;
-            text-align: center;
-            opacity: 0;
-            animation: fadeInHeader 1s forwards;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: #0f0;
-            animation: glitch2 4s infinite;
-        }
-
-        /* Анимация для заголовка */
-        @keyframes fadeInHeader {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Стили для навигации */
-        nav {
-            background-color: #333;
-            padding: 10px 0;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            opacity: 0;
-            animation: fadeInNav 1.5s forwards;
-        }
-
-        nav a {
-            text-decoration: none;
+            background-color: #121212;
             color: #fff;
-            font-size: 1.2em;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: #0f0;
-        }
-
-        /* Анимация для навигации */
-        @keyframes fadeInNav {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Стили для главных разделов */
-        section {
-            padding: 80px 20px 20px;
-            display: none;
-            animation: fadeInContent 1s forwards;
-            opacity: 0;
-        }
-
-        /* Анимация появления содержимого */
-        @keyframes fadeInContent {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-        @keyframes glitch2 {
-    0% {
-        text-shadow: 4px 0 red, -2px 0 blue;
-    }
-    33% {
-        text-shadow: -4px 0 red, 2px 0 blue;
-    }
-    66% {
-        text-shadow: -4px 0 red, 2px 0 blue;
-    }
-
-    100% {
-        text-shadow: 4px 0 red, -2px 0 blue;
-    }
-}
-        .chapter {
-            margin-bottom: 50px;
-        }
-
-        .chapter h2 {
-            color: #0f0;
-            font-size: 2em;
-        }
-
-        .chapter p {
-            font-size: 1.2em;
             line-height: 1.6;
         }
-
-        /* Кнопки навигации */
-        .button {
-            padding: 10px 20px;
-            background-color: #0f0;
-            color: #111;
-            border: none;
-            font-size: 1.1em;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .button:hover {
-            background-color: #444;
-            color: #0f0;
-        }
-
-        footer {
+        header {
+            background-color: #333;
+            padding: 20px;
             text-align: center;
-            background-color: #222;
-            padding: 10px 0;
-            position: absolute;
-            bottom: 0;
+        }
+        header h1 {
+            font-size: 36px;
+            margin: 0;
+            color: #00bcd4;
+        }
+        section {
+            padding: 20px;
+            margin: 20px;
+        }
+        .chapter {
+            margin-bottom: 40px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .chapter img {
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            margin-top: 15px;
+        }
+        .chapter h2 {
+            font-size: 28px;
+            color: #00bcd4;
+        }
+        .chapter p {
+            font-size: 18px;
+        }
+
+        /* Переворачивающиеся плитки */
+        .tiles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .tile {
+            perspective: 1000px;
+            position: relative;
+        }
+        .tile .tile-inner {
             width: 100%;
-            font-size: 1.1em;
+            height: 100%;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+            border-radius: 15px;
+        }
+        .tile:hover .tile-inner {
+            transform: rotateY(180deg);
+        }
+        .tile .tile-front, .tile .tile-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+        }
+        .tile .tile-front {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .tile .tile-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
+        }
+        .tile .tile-back {
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            transform: rotateY(180deg);
+            text-align: center;
+            padding: 20px;
+        }
+        .tile .tile-back .btn {
+            padding: 10px 20px;
+            background-color: #00bcd4;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .tile .tile-back .btn:focus {
+            outline: none;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+       
+
+
+
+        @keyframes flipIn {
+            from {
+                transform: rotateY(180deg);
+            }
+            to {
+                transform: rotateY(0deg);
+            }
+        }
+
+       
+        
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        
+
+
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+       
+
+        /* Футер */
+        footer {
+            background-color: #1e1e1e;
+            color: #aaaaaa;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
         }
         
+            
+/* Общие стили */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Плитка с изображением на обложке */
+.flip-card-front {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #333;
+}
+
+.flip-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire area */
+    opacity: 0.5; /* Adds a slight opacity for the text to stand out */
+}
+
+.flip-card-front h3 {
+    position: absolute;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* Плитка с описанием */
+.flip-card-back {
+    background-color: #444;
+    transform: rotateY(180deg);
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Прочие стили остаются без изменений */
+.flip-container {
+    perspective: 1000px;
+}
+
+.flip-card {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.flip-container:hover .flip-card {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: white;
+    border-radius: 10px;
+}
+
+.flip-card-back .btn {
+    background-color: #007acc;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 15px;
+    display: inline-block;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.flip-card-back .btn:hover {
+    background-color: #005f8c;
+    transform: scale(1.1);
+}
+/* Плитки расположены горизонтально */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 40px;
+}
+
+/* Плитки */
+.flip-container {
+    width: 300px; /* Ширина плитки */
+    height: 300px; /* Высота плитки */
+    margin-bottom: 20px; /* Отступ снизу для плиток */
+}
+
+/* Плитка с изображением на обложке */
+.flip-card-front {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #333;
+}
+
+.flip-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the entire area */
+    opacity: 0.5; /* Adds a slight opacity for the text to stand out */
+}
+
+.flip-card-front h3 {
+    position: absolute;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* Плитка с описанием */
+.flip-card-back {
+    background-color: #444;
+    transform: rotateY(180deg);
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Прочие стили остаются без изменений */
+.flip-container {
+    perspective: 1000px;
+}
+
+.flip-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+}
+
+.flip-container:hover .flip-card {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    color: white;
+    border-radius: 10px;
+}
+
+.flip-card-back .btn {
+    background-color: #007acc;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 15px;
+    display: inline-block;
+    transition: background-color 0.3s, transform 0.3s;
+    size: 10%;
+}
+
+.flip-card-back .btn:hover {
+    background-color: #005f8c;
+    transform: scale(1.1);
+}
+
+.plit{
+    text-align: center;
+}
+header nav {
+            margin-top: 10px;
+        }
+        header nav a {
+            color: #fff;
+            font-size: 18px;
+            text-decoration: none;
+            margin: 0 15px;
+            padding: 10px 15px;
+            background-color: #007acc;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        header nav a:hover {
+            background-color: #005f8c;
+        }
+        .slogan {
+            font-size: 2em;
+            font-weight: bold;
+            color: #00bcd4;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Эффект глитча */
+        @keyframes glitch {
+            0% {
+                transform: skew(0deg);
+                opacity: 1;
+            }
+            20% {
+                transform: skew(-10deg);
+                opacity: 0.7;
+            }
+            40% {
+                transform: skew(10deg);
+                opacity: 1;
+            }
+            60% {
+                transform: skew(-10deg);
+                opacity: 0.7;
+            }
+            80% {
+                transform: skew(10deg);
+                opacity: 1;
+            }
+            100% {
+                transform: skew(0deg);
+                opacity: 1;
+            }
+        }
+
+        .glitch-effect {
+            animation: glitch 0.5s linear infinite;
+        }
+
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Даркнет: История и безопасность</h1>
+    <h1>Даркнет: Мир в тени</h1>
+    <p><div class="slogan" id="slogan">Добро пожаловать в темную сеть!</div></p>
+    <nav>
+        <a href="#chapter1">Что такое Даркнет?</a>
+        <a href="#chapter2">Как попасть в Даркнет?</a>
+        <a href="#chapter3">Использование Даркнета</a>
+        <a href="#chapter4">Проблемы и риски</a>
+        <a href="#resources">Мастадонты даркнета</a>
+    </nav>
 </header>
 
-<nav>
-    <a href="#" onclick="showSection('chapter1')">О Даркнете</a>
-    <a href="#" onclick="showSection('chapter2')">История</a>
-    <a href="#" onclick="showSection('chapter3')">Как устроен Даркнет</a>
-    <a href="#" onclick="showSection('chapter4')">Доступ к Даркнету</a>
-    <a href="#" onclick="showSection('chapter5')">Безопасность в Даркнете</a>
-    <a href="#" onclick="showSection('chapter6')">Пользователи Даркнета</a>
-    <a href="#" onclick="showSection('chapter7')">Риски и угрозы</a>
-    <a href="#" onclick="showSection('chapter8')">Законодательство</a>
-    <a href="#" onclick="showSection('chapter9')">Заключение</a>
-</nav>
+<section>
+    <section id="chapter1">
+        <div class="chapter">
+        <h2>Что такое Даркнет?</h2>
+        <p>Даркнет — это часть интернета, которая скрыта от обычных пользователей. Это сеть, где можно найти анонимные веб-сайты, форумы и сервисы, которые не индексируются поисковыми системами. Она часто ассоциируется с незаконной деятельностью, но на самом деле даркнет служит важным инструментом для обеспечения конфиденциальности и безопасности в интернете, особенно в странах с ограничениями свободы слова. В даркнете можно найти ресурсы для обмена информацией, а также анонимные чаты, доступ к которым могут получить лишь те, кто использует специальное программное обеспечение, такое как Tor.</p>
 
-<section id="chapter1">
-    <div class="chapter">
-        <h2>О Даркнете</h2>
-        <p>Даркнет — это особая часть интернета, которая находится вне поля зрения обычных пользователей. Его используют люди, стремящиеся сохранить анонимность, включая журналистов, активистов, а также людей, занимающихся незаконной деятельностью. Он отличается от обычной сети тем, что его контент не индексируется поисковыми системами, и для доступа к нему нужно использовать специальные программы, такие как Tor.</p>
-        <p>Создание Даркнета произошло на основе криптографических технологий и анонимных сетей. Первоначально идея заключалась в том, чтобы предоставить активистам, работающим в странах с жесткими режимами, безопасное пространство для общения и обмена информацией. Однако со временем Даркнет привлек внимание и тех, кто использует его для преступной деятельности, такой как торговля наркотиками, оружием и другими незаконными товарами.</p>
-        <button class="button" onclick="showSection('chapter2')">История Даркнета</button>
-        <button class="button" onclick="showSection('chapter9')">На прошлую страницу</button>
+        <p>Один из ключевых аспектов даркнета — анонимность. Все данные передаются через множество промежуточных серверов, что затрудняет установление реального местоположения пользователя. Важно отметить, что, несмотря на его популярность в кругах, занимающихся противоправной деятельностью, даркнет также используется многими людьми, стремящимися сохранить свою конфиденциальность, включая журналистов и активистов, работающих в странах с репрессивными режимами.</p>
+        
+        <p>Помимо этого, даркнет часто служит для связи людей, которые хотят общаться без угрозы быть обнаруженными, что делает его важным инструментом для защиты прав человека в цифровом мире.</p>
+        <img src="https://www.it-world.ru/upload/iblock/7b6/resize_582_396_allweb_s.webp" alt="Даркнет">
     </div>
-</section>
+        
+    </section>
+    
+    <section id="chapter2">
+     <div class="chapter">
+        <h2>Как попасть в Даркнет?</h2>
+        <p>Для доступа в даркнет используется специальное программное обеспечение, наиболее известным из которых является Tor. Tor — это система анонимных соединений, которая направляет трафик через несколько узлов по всему миру, чтобы скрыть местоположение пользователя и обеспечить анонимность. Чтобы получить доступ к сайтам в даркнете, необходимо скачать и установить браузер Tor, который позволяет заходить на адреса, заканчивающиеся на .onion. Эти сайты скрыты от обычных поисковиков, и для их открытия требуется специальная настройка.</p>
 
-<section id="chapter2">
-    <div class="chapter">
-        <h2>История Даркнета</h2>
-        <p>Идея создания Даркнета была выдвинута в середине 1990-х годов. Первые прототипы анонимных сетей, такие как Freenet и Tor, были разработаны с целью обеспечения конфиденциальности. Основные задачи, которые ставили перед собой разработчики, заключались в создании безопасной среды для обмена информацией в условиях, когда вмешательство в частную жизнь пользователя или его преследование было бы невозможно. Tor, который сегодня является одной из самых популярных технологий для доступа в Даркнет, был запущен в 2002 году.</p>
-        <p>С развитием технологий и ростом интереса к Даркнету, анонимность начала использоваться не только для защиты личных данных, но и для противоправной деятельности. На Даркнете стали появляться сайты, на которых можно было покупать наркотики, оружие, фальшивые документы и другие запрещенные товары. С момента своего появления Даркнет стал объектом пристального внимания властей различных стран, и во многих государствах начались усилия по ограничению его использования.</p>
-        <button class="button" onclick="showSection('chapter3')">Как устроен Даркнет</button>
-        <button class="button" onclick="showSection('chapter1')">На прошлую страницу</button>
+        <p>Существует несколько причин, по которым пользователи могут искать доступ в даркнет. Одной из них является необходимость скрывать свою личность в интернете. Журналисты, активисты и правозащитники, работающие в странах с жесткой цензурой, используют даркнет для общения и обмена информацией с источниками без опасности преследования.</p>
+
+        <p>Однако важно понимать, что даркнет также привлекает людей, занимающихся противоправной деятельностью. На некоторых сайтах можно найти нелегальные товары и услуги, такие как наркотики, оружие, а также товары, нарушающие авторские права.</p>
+        
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Tor-logo-2011-flat.svg/1200px-Tor-logo-2011-flat.svg.png" alt="Как попасть в Даркнет">
     </div>
-</section>
+    </section>
+   
+    <section id="chapter3">
+     <div class="chapter">
+        <h2>Использование Даркнета</h2>
+        <p>Даркнет используется не только для незаконных целей, но и для защиты конфиденциальности пользователей. В странах с репрессивными режимами даркнет может стать единственным способом для людей обмениваться информацией, защищать свои права и свободы. Журналисты используют даркнет для того, чтобы раскрывать информацию о нарушениях прав человека без риска быть подвергнутыми преследованию.</p>
 
-<section id="chapter3">
-    <div class="chapter">
-        <h2>Как устроен Даркнет</h2>
-        <p>Даркнет состоит из множества скрытых сайтов и сервисов, доступ к которым можно получить только с помощью специализированного программного обеспечения, такого как Tor. Эти сайты обычно имеют доменные имена, заканчивающиеся на ".onion", которые невозможно найти в стандартных поисковых системах. Это и является одной из главных особенностей Даркнета — анонимность и скрытность.</p>
-        <p>Помимо использования Tor, для анонимного общения и обмена данными применяются различные другие криптографические технологии. Сайты на Даркнете могут быть различными по своей природе: от форумов и блогов до торговых площадок и даже социальных сетей. Однако несмотря на множество легальных сервисов, Даркнет также привлекает людей, занимающихся нелегальной деятельностью, включая преступников и террористов.</p>
-        <button class="button" onclick="showSection('chapter4')">Доступ к Даркнету</button>
-        <button class="button" onclick="showSection('chapter2')">На прошлую страницу</button>
+        <p>Существует несколько типов ресурсов, которые можно найти в даркнете: анонимные форумы, которые не индексируются поисковыми системами, а также рынки, на которых осуществляется обмен товарами и услугами, как законными, так и незаконными. Пользователи даркнета могут свободно обмениваться информацией, совершать сделки, а также получать доступ к уникальному контенту, который недоступен в открытом интернете.</p>
+
+        <p>Важно отметить, что даркнет также используется для обмена научными и образовательными материалами. Существуют ресурсы, на которых можно найти редкие книги, исследования, а также платформы для анонимного обучения и обсуждения научных тем.</p>
+
+        <img src="https://cdn.forbes.ru/files/c/1082x735/forbes_import/01/01_2014061611.29.06.webp" alt="Использование Даркнета">
     </div>
-</section>
+    </section>
+    <section id="chapter4">
 
-<section id="chapter4">
     <div class="chapter">
-        <h2>Доступ к Даркнету</h2>
-        <p>Для того чтобы попасть в Даркнет, необходимо использовать специальные браузеры, такие как Tor. Tor (The Onion Router) представляет собой программное обеспечение, которое позволяет пользователю анонимно передавать данные через несколько промежуточных серверов, называемых узлами, что значительно затрудняет отслеживание его активности в интернете.</p>
-        <p>Для начала работы с Tor достаточно скачать и установить специальный браузер, который позволяет получить доступ к скрытым сайтам. Важным аспектом работы с Даркнетом является то, что пользователю рекомендуется соблюдать высокие стандарты безопасности: не использовать реальные данные, включать дополнительные способы защиты и избегать определенных рисков, таких как открытие вредоносных файлов или переход на сомнительные ресурсы.</p>
-        <button class="button" onclick="showSection('chapter5')">Безопасность в Даркнете</button>
-        <button class="button" onclick="showSection('chapter3')">На прошлую страницу</button>
+        <h2>Проблемы и риски Даркнета</h2>
+        <p>Несмотря на множество положительных аспектов использования даркнета, он также имеет и свои опасности. Даркнет часто ассоциируется с нелегальной деятельностью, включая торговлю наркотиками, оружием, фальшивыми документами и другими запрещенными товарами. На многих даркнет-ресурсах проводятся мошеннические операции, в том числе на "черных рынках".</p>
+
+        <p>Кроме того, даркнет является привлекательным местом для хакеров и тех, кто занимается киберпреступлениями. Пользователи, не принимающие достаточных мер безопасности, могут стать жертвами различных атак, таких как фишинг, вирусы и утечка личных данных. Следовательно, важно быть осторожным и защищать свои устройства при работе с даркнетом.</p>
+
+        <p>Тем не менее, даркнет также имеет значительное значение для сохранения конфиденциальности, а также служит важной платформой для людей, которые борются с репрессиями в своих странах.</p>
+
+        <img src="https://st.drweb.com/static/new-www/pravda/issue/avp_darknet.png" alt="Проблемы Даркнета">
     </div>
-</section>
+    </section>
 
-<section id="chapter5">
-    <div class="chapter">
-        <h2>Безопасность в Даркнете</h2>
-        <p>Безопасность в Даркнете — важный аспект, о котором должны задумываться все пользователи. Использование анонимных сетей и браузеров, таких как Tor, позволяет скрыть IP-адрес, но не делает пользователя полностью неуязвимым. Помимо этого, необходимо учитывать множество других факторов, таких как использование криптовалюты для оплаты, соблюдение правил безопасности при загрузке файлов и защита от вредоносных программ.</p>
-        <p>Для защиты своей анонимности, пользователи Даркнета должны избегать использования личных данных, таких как настоящие имена или адреса. Кроме того, рекомендуется использовать VPN-сервисы и дополнительные средства защиты, такие как криптография для шифрования сообщений и файлов. Важно также помнить, что даже в Даркнете существуют различные угрозы, такие как фишинг, шантаж и распространение вирусов.</p>
-        <button class="button" onclick="showSection('chapter6')">Пользователи Даркнета</button>
-        <button class="button" onclick="showSection('chapter4')">На прошлую страницу</button>
+
+    <div class="plit"><h1>Мастадонты даркнета</h1></div>
+    <!-- Плитки с ресурсами -->
+<div class="container">
+    <!-- Плитка 1: Tor Browser -->
+    <div class="flip-container">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <!-- Add Image as Background -->
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRA6746zT6xDq6vaP8tX8N_fgSD0_-uGcJ4QQ&s" alt="Tor Browser" class="flip-card-img">
+                <h3>Оружие</h3>
+            </div>
+            <div class="flip-card-back">
+                <p>Оружие с черного рынка, которое невозможно отследить.</p>
+                <a href="https://www.torproject.org/" class="btn" target="_blank">Подробнее</a>
+            </div>
+        </div>
     </div>
-</section>
 
-<section id="chapter6">
-    <div class="chapter">
-        <h2>Пользователи Даркнета</h2>
-        <p>Пользователи Даркнета могут быть очень разнообразными. Некоторые используют эту сеть для защиты своей приватности в странах с жесткими режимами, другие — для незаконной деятельности. Например, активисты, правозащитники и журналисты используют Даркнет для обмена информацией, чтобы избежать преследования со стороны властей. В то же время, Даркнет привлекает людей, занимающихся торговлей наркотиками, оружием и другими запрещенными товарами.</p>
-        <p>Также важно отметить, что некоторые пользователи Даркнета работают над проектами, направленными на улучшение анонимности и безопасности в интернете. Они могут разрабатывать новые технологии, такие как криптографические протоколы, и создавать платформы для обмена анонимной информацией, что делает Даркнет важным инструментом для борьбы за свободу слова и права человека.</p>
-        <button class="button" onclick="showSection('chapter7')">Риски и угрозы</button>
-        <button class="button" onclick="showSection('chapter5')">На прошлую страницу</button>
+    <!-- Плитка 2: VPN -->
+    <div class="flip-container">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <!-- Add Image as Background -->
+                <img src="https://объясняем.рф/upload/iblock/72f/pqz3ch4vng7guazow8r9ig2k3jryobva/001_RIA_.HR.jpg" alt="VPN" class="flip-card-img">
+                <h3>Наркотики</h3>
+            </div>
+            <div class="flip-card-back">
+                <p>Нелегальные психостимуляторы.</p>
+                <a href="https://www.expressvpn.com/" class="btn" target="_blank">Подробнее</a>
+            </div>
+        </div>
     </div>
-</section>
 
-<section id="chapter7">
-    <div class="chapter">
-        <h2>Риски и угрозы Даркнета</h2>
-        <p>Даркнет, несмотря на свою анонимность, представляет собой множество рисков для пользователей. На нем часто встречаются сайты, которые распространяют вредоносное ПО, шпионские программы и вирусы. Кроме того, пользователи могут стать жертвами мошенничества, когда их обманывают, предлагая фальшивые товары или услуги.</p>
-        <p>Особенно опасным является то, что многие преступные организации используют Даркнет для торговли незаконными товарами, такими как наркотики, оружие, фальшивые документы и другие запрещенные товары. В связи с этим, власти различных стран активно проводят операции по закрытию таких ресурсов и привлечению виновных к ответственности.</p>
-        <button class="button" onclick="showSection('chapter8')">Законодательство</button>
-        <button class="button" onclick="showSection('chapter6')">На прошлую страницу</button>
+    <!-- Плитка 3: Signal -->
+    <div class="flip-container">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <!-- Add Image as Background -->
+                <img src="https://brat-bg.com/images/fake-passport-service.jpg" alt="Signal" class="flip-card-img">
+                <h3>Документы</h3>
+            </div>
+            <div class="flip-card-back">
+                <p>Нелегальные документы, паспорта, справки.</p>
+                <a href="https://signal.org/" class="btn" target="_blank">Подробнее</a>
+            </div>
+        </div>
     </div>
-</section>
 
-<section id="chapter8">
-    <div class="chapter">
-        <h2>Законодательство и Даркнет</h2>
-        <p>Существует огромное количество законодательных актов, направленных на регулирование использования Даркнета. В разных странах отношение к нему отличается. В некоторых государствах доступ к Даркнету полностью запрещен, в других — на него накладываются ограничения. Однако большинство стран, в том числе и те, где Даркнет используется для борьбы с тоталитарными режимами, признают, что его использование может быть как позитивным, так и негативным.</p>
-        <p>Некоторые страны ведут жесткую борьбу с использованием Даркнета для преступных целей, пытаясь пресекать незаконные операции с наркотиками, оружием и другими запрещенными товарами. В то же время, правозащитники и активисты утверждают, что необходимо обеспечить баланс между правом на приватность и борьбой с преступностью, и что Даркнет играет важную роль в сохранении анонимности пользователей.</p>
-        <button class="button" onclick="showSection('chapter9')">Заключение</button>
-        <button class="button" onclick="showSection('chapter7')">На прошлую страницу</button>
+    <!-- Плитка 4: ProtonMail -->
+    <div class="flip-container">
+        <div class="flip-card">
+            <div class="flip-card-front">
+                <!-- Add Image as Background -->
+                <img src="https://cdn.myslo.ru/Content/NewsImage/6a/bd/6abd6787-795e-440b-8362-2309c41cfe3e_1.jpg" alt="ProtonMail" class="flip-card-img">
+                <h3>Контент</h3>
+            </div>
+            <div class="flip-card-back">
+                <p>Садистский контент и Д/П.</p>
+                <a href="https://protonmail.com/" class="btn" target="_blank">Подробнее</a>
+            </div>
+        </div>
     </div>
+</div>
+
 </section>
-
-<section id="chapter9">
-    <div class="chapter">
-        <h2>Заключение</h2>
-        <p>Даркнет — это не только место для скрытых и незаконных операций, но и важный инструмент для тех, кто ценит свою анонимность и безопасность в интернете. Это пространство, которое продолжает развиваться, привлекая как законопослушных пользователей, так и преступников. Важно помнить, что использование Даркнета всегда связано с рисками, но при соблюдении мер предосторожности он может стать полезным инструментом для обеспечения конфиденциальности и свободы.</p>
-        <button class="button" onclick="showSection('chapter8')">На прошлую страницу</button>
-    </div>
-</section>
-
-<footer>
-    <p>&copy; Kostus Barkun   Vlad Makei. Все права защищены.</p>
-</footer>
-
-<script>
-    function showSection(sectionId) {
-        // Скрытие всех секций
-        const sections = document.querySelectorAll('section');
-        sections.forEach(section => {
-            section.style.display = 'none';
-        });
-
-        // Показ нужной секции
-        const section = document.getElementById(sectionId);
-        section.style.display = 'block';
-    }
-
-    // Изначально показываем первую секцию
-    showSection('chapter1');
-</script>
+<footer> Проект создан для получения десяточек по информатике, Владиком Макеем и Костиком Баркуном</footer>
 
 </body>
-</html>
+<script>
+    const slogans = [
+        "Темная сеть, скрытые возможности,",
+"В поисках истинного анонимности?,",
+"Не для всех, но для тебя,",
+"Открой для себя неизведанные просторы,",
+"Твоя анонимность — наш приоритет,",
+"Невидимые возможности для смелых,",
+"За границами интернета — даркнет ждет,",
+"Невидимый мир без ограничений,",
+"Здесь нет следов. Только анонимность,",
+"Погрузись в тени интернета,",
+"Безопасность и анонимность — наши принципы,",
+"Забудь ограничения, открой даркнет,",
+"В поисках истины? Даркнет откроет глаза,",
+"Секреты, которые недоступны для всех,",
+"Скрытая сеть для тех, кто ищет больше,",
+"Проверь, что скрыто в тенях,",
+"Живи вне закона. Ощути свободу,",
+"Искусство скрыться в сети,",
+"Даркнет: свобода от ограничений,",
+"Перейди на темную сторону интернета,",
+"Приватность — наше второе имя,",
+"Не все видят, что скрывается за экраном,",
+"Никто не найдет твоих следов здесь,",
+"Искусство анонимности в даркнете,",
+"Загляни в темную сторону сети,",
+"Тени интернета для смелых,",
+"Где нет ограничений — там даркнет,",
+"Анонимность — новый стандарт безопасности,",
+"Все твои действия скрыты в темной сети,",
+"Здесь ты свободен от глаз правительства,",
+"Мир, где ты можешь быть собой,",
+"В поисках свободы? Добро пожаловать в даркнет,",
+"Теневые пути интерн
